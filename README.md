@@ -1,6 +1,5 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Buddy Journal
+An interactive MERN stack single-page application where user can jot down journals, notes and memories. User is able to upload images, input notes, edit, update and delete notes.
 
 ## Available Scripts
 
