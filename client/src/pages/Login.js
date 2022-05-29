@@ -154,7 +154,9 @@ const Login = (props) => {
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
-          {error && <div>Login failed</div>}
+          {error && (
+            <div>Your email or password are incorrect, please try again!</div>
+          )}
         </Grid>
       </Grid>
     </ThemeProvider>
