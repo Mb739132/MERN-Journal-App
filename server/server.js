@@ -28,7 +28,10 @@ const startApolloServer = async (typeDefs, resolvers) => {
   server.applyMiddleware({ app });
 
   // Serve up static assets
-  app.use("/images", express.static(path.join(__dirname, "../client/assets")));
+  app.use(
+    "/images",
+    express.static(path.join(__dirname, "../client/src/assets"))
+  );
 
   // Serve up static assets
   if (process.env.NODE_ENV === "production") {

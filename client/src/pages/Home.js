@@ -1,22 +1,23 @@
 import React from "react";
-// import Journal from "../components/Journal";
 
 import Auth from "../utils/auth";
-// import { useQuery } from "@apollo/client";
 
+import Header from "../components/Header";
+import LandingPage from "./LandingPage";
 const Home = () => {
   // const journals = data?.journals || [];
 
   const loggedIn = Auth.loggedIn();
   return (
     <main>
-      <div>
-        {loggedIn && (
-          <div>
-            <p>vgvhbhnjnj</p>
-          </div>
-        )}
-      </div>
+      {loggedIn ? (
+        <div>
+          <Header></Header>
+          <p>vgvhbhnjnj</p>
+        </div>
+      ) : (
+        <LandingPage></LandingPage>
+      )}
     </main>
   );
 };
