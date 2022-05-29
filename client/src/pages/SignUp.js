@@ -1,10 +1,13 @@
-import * as React from "react";
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { ADD_USER } from "../utils/mutations";
+import Auth from "../utils/auth";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+// import FormControlLabel from "@mui/material/FormControlLabel";
+// import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -32,14 +35,37 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-const SignUp = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+const Signup = () => {
+  const [formState, setFormState] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [addUser, { error }] = useMutation(ADD_USER);
+
+  // update state based on form input changes
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormState({
+      ...formState,
+      [name]: value,
     });
+  };
+
+  // submit form
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await addUser({
+        variables: { ...formState },
+      });
+
+      Auth.login(data.addUser.token);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -61,7 +87,7 @@ const SignUp = () => {
           <Box
             component="form"
             noValidate
-            onSubmit={handleSubmit}
+            onSubmit={handleFormSubmit}
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
@@ -73,6 +99,8 @@ const SignUp = () => {
                   label="User Name"
                   name="username"
                   autoComplete="user-name"
+                  value={formState.username}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -83,6 +111,8 @@ const SignUp = () => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={formState.email}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -94,6 +124,8 @@ const SignUp = () => {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={formState.password}
+                  onChange={handleChange}
                 />
               </Grid>
             </Grid>
@@ -114,10 +146,11 @@ const SignUp = () => {
             </Grid>
           </Box>
         </Box>
+        {error && <div>Sign up failed</div>}
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
 };
 
-export default SignUp;
+export default Signup;

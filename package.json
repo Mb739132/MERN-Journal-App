@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/SophieQuan/buddy-journal/issues"
   },
-  "homepage": "https://github.com/SophieQuan/buddy-journal#readme"
+  "homepage": "https://github.com/SophieQuan/buddy-journal#readme",
+  "devDependencies": {
+    "concurrently": "^7.2.1"
+  }
 }
