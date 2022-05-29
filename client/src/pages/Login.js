@@ -114,6 +114,7 @@ const Login = (props) => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                type="email"
                 value={formState.email}
                 onChange={handleChange}
               />

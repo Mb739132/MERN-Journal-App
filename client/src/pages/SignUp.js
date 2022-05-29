@@ -98,6 +98,7 @@ const Signup = () => {
                   id="username"
                   label="User Name"
                   name="username"
+                  type="username"
                   autoComplete="user-name"
                   value={formState.username}
                   onChange={handleChange}
@@ -110,6 +111,7 @@ const Signup = () => {
                   id="email"
                   label="Email Address"
                   name="email"
+                  type="email"
                   autoComplete="email"
                   value={formState.email}
                   onChange={handleChange}
