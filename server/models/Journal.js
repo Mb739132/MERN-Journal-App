@@ -35,4 +35,6 @@ const JournalSchema = new Schema(
   }
 );
 
-module.exports = JournalSchema;
+const Journal = model("Journal", JournalSchema);
+
+module.exports = Journal;

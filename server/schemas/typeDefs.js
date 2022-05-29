@@ -16,7 +16,7 @@ const typeDefs = gql`
     username: String
     email: String!
     password: String!
-    savedJournals: [Journal]
+    journals: [Journal]
   }
 
   type Query {
@@ -34,9 +34,26 @@ const typeDefs = gql`
 
     updateUser(username: String, email: String, password: String): User
 
-    addJournal(heading: String!, journalText: String!, img: String!): User
+    addJournal(
+      heading: String!
+      journalText: String!
+      image: String!
+      createdAt: String!
+    ): User
 
-    deleteJournal(heading: String!, journalText: String!, img: String!): User
+    updateJournal(
+      heading: String!
+      journalText: String!
+      image: String!
+      createdAt: String!
+    ): User
+
+    deleteJournal(
+      heading: String!
+      journalText: String!
+      image: String!
+      createdAt: String!
+    ): User
 
     addComment(journalId: ID!): User
   }

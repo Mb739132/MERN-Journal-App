@@ -3,11 +3,9 @@ const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 const bcrypt = require("bcrypt");
 
-const journalSchema = require("./index");
-
 const userSchema = new Schema(
   {
-    username: {
+    usename: {
       type: String,
       required: true,
       trim: true,
@@ -22,7 +20,12 @@ const userSchema = new Schema(
       required: true,
       minlength: 5,
     },
-    savedJournals: [journalSchema],
+    journals: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Journal",
+      },
+    ],
   },
   {
     toJSON: {

@@ -65,7 +65,21 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
 
-    addJournal: async (parent, args, context) => {
+    addJournal: async (parent, { journals }, context) => {
+      console.log(context);
+      if (context.user) {
+        const journal = new Journal({ journals });
+
+        await User.findByIdAndUpdate(context.user._id, {
+          $push: { journals: journal },
+        });
+
+        return journal;
+      }
+
+      throw new AuthenticationError("Not logged in");
+    },
+    updateJournal: async (parent, args, context) => {
       if (context.user) {
         const journal = await Journal.create({
           ...args,
@@ -76,7 +90,7 @@ const resolvers = {
           { _id: context.user._id },
           {
             $push: {
-              savedJournal: { journalId: args.journalId },
+              journal: { journalId: args.journalId },
             },
           },
           { new: true }
@@ -93,7 +107,7 @@ const resolvers = {
           { _id: context.user._id },
           {
             $pull: {
-              savedJournal: { journalId: args.journalId },
+              journal: { journalId: args.journalId },
             },
           },
           { new: true }
