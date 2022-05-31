@@ -7,7 +7,7 @@ const JournalSchema = new Schema(
       type: String,
       required: "Please add journal heading",
       minlength: 1,
-      maxlength: 100,
+      maxlength: 80,
     },
     username: {
       type: String,
@@ -21,6 +21,7 @@ const JournalSchema = new Schema(
     },
     image: {
       type: String,
+      required: true,
     },
     createdAt: {
       type: Date,

@@ -19,11 +19,13 @@ export default function MenuAppBar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <img
-              src={logo}
-              alt="buddy journal character"
-              className="logo"
-            ></img>
+            <Link to="/">
+              <img
+                src={logo}
+                alt="buddy journal character"
+                className="logo"
+              ></img>
+            </Link>
           </Typography>
           <div>
             {Auth.loggedIn() ? (

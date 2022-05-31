@@ -33,6 +33,13 @@ const resolvers = {
     },
   },
   Mutation: {
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
+
+      return { token, user };
+    },
+
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -49,37 +56,7 @@ const resolvers = {
 
       return { token, user };
     },
-    addUser: async (parent, args) => {
-      const user = await User.create(args);
-      const token = signToken(user);
-
-      return { token, user };
-    },
-    updateUser: async (parent, args, context) => {
-      if (context.user) {
-        return await User.findByIdAndUpdate(context.user._id, args, {
-          new: true,
-        });
-      }
-
-      throw new AuthenticationError("Not logged in");
-    },
-
-    addJournal: async (parent, { journals }, context) => {
-      console.log(context);
-      if (context.user) {
-        const journal = new Journal({ journals });
-
-        await User.findByIdAndUpdate(context.user._id, {
-          $push: { journals: journal },
-        });
-
-        return journal;
-      }
-
-      throw new AuthenticationError("Not logged in");
-    },
-    updateJournal: async (parent, args, context) => {
+    addJournal: async (parent, args, context) => {
       if (context.user) {
         const journal = await Journal.create({
           ...args,
@@ -88,11 +65,7 @@ const resolvers = {
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
-          {
-            $push: {
-              journal: { journalId: args.journalId },
-            },
-          },
+          { $push: { journals: journal._id } },
           { new: true }
         );
 
@@ -101,20 +74,19 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be logged in!");
     },
-    deleteJournal: async (parent, args, context) => {
+
+    updateJournal: async (parent, args, context) => {
       if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          {
-            $pull: {
-              journal: { journalId: args.journalId },
-            },
-          },
-          { new: true }
-        );
-        return updatedUser;
+        const update = await Journal.findByIdAndUpdate(args._id, args, {
+          new: true,
+        });
+        return update;
       }
       throw new AuthenticationError("You need to be logged in!");
+    },
+
+    deleteJournal: async (parent, { _id }) => {
+      return Journal.findByIdAndDelete({ _id });
     },
   },
 };

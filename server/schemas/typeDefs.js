@@ -5,6 +5,7 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   type Journal {
     _id: ID
+    heading: String
     journalText: String
     image: String
     createdAt: String
@@ -14,11 +15,9 @@ const typeDefs = gql`
   type User {
     _id: ID
     username: String
-    email: String!
-    password: String!
+    email: String
     journals: [Journal]
   }
-
   type Query {
     me: User
     users: [User]
@@ -26,38 +25,21 @@ const typeDefs = gql`
     journals(username: String): [Journal]
     journal(_id: ID!): Journal
   }
-
   type Mutation {
     login(email: String!, password: String!): Auth
-
     addUser(username: String!, email: String!, password: String!): Auth
-
-    updateUser(username: String, email: String, password: String): User
-
-    addJournal(
-      heading: String!
-      journalText: String!
-      image: String!
-      createdAt: String!
-    ): User
-
+    addJournal(heading: String!, journalText: String!, image: String!): Journal
     updateJournal(
       heading: String!
       journalText: String!
       image: String!
-      createdAt: String!
-    ): User
-
+    ): Journal
     deleteJournal(
       heading: String!
       journalText: String!
       image: String!
-      createdAt: String!
-    ): User
-
-    addComment(journalId: ID!): User
+    ): Journal
   }
-
   type Auth {
     token: ID!
     user: User
