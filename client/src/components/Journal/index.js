@@ -4,6 +4,9 @@ import { useMutation } from "@apollo/client";
 import { ADD_JOURNAL } from "../../utils/mutations";
 import { QUERY_JOURNALS, QUERY_ME } from "../../utils/queries";
 
+import { TextareaAutosize } from "@mui/material";
+import "./styles.css";
+
 const Journal = () => {
   const [heading, setHeading] = useState("");
   const [journalText, setJournalText] = useState("");
@@ -53,26 +56,29 @@ const Journal = () => {
     }
   };
   return (
-    <div>
+    <div className="formWrapper">
       <form
         className="flex-row justify-center justify-space-between-md align-stretch"
         onSubmit={handleFormSubmit}
       >
+        <h2>What's on your mind?</h2>
         <input
           type="text"
           name="heading"
           value={heading}
+          placeholder="Title"
           onChange={(e) => setHeading(e.target.value)}
         ></input>
-        <textarea
+        <TextareaAutosize
           placeholder="Here's a new journal..."
+          minRows={7}
           value={journalText}
           className="form-input col-12 col-md-9"
           onChange={(e) => setJournalText(e.target.value)}
-        ></textarea>
+        ></TextareaAutosize>
         <input type="file" onChange={onImageChange} multiple />
         <button className="btn col-12 col-md-3" type="submit">
-          Submit
+          Add Journal
         </button>
       </form>
     </div>

@@ -7,32 +7,38 @@ import Header from "../components/Header";
 import LandingPage from "./LandingPage";
 import Journal from "../components/Journal";
 import JournalList from "../components/JournalList";
+
+import { Container, Grid } from "@mui/material";
 const Home = () => {
   const { loading, data } = useQuery(QUERY_JOURNALS);
   const journals = data?.journals || [];
 
   const loggedIn = Auth.loggedIn();
   return (
-    <main>
+    <>
       <Header></Header>
-      {loggedIn ? (
-        <div className="col-12 mb-3">
-          <Journal />
-        </div>
-      ) : (
-        <LandingPage></LandingPage>
-      )}
-      <div className={`col-12 mb-3 ${loggedIn && "col-lg-8"}`}>
-        {loading ? (
-          <div>Loading...</div>
+      <Container>
+        {loggedIn ? (
+          <div className="col-12 mb-3">
+            <Journal />
+            <div className={`col-12 mb-3 ${loggedIn && "col-lg-8"}`}>
+              {loading ? (
+                <div>Loading...</div>
+              ) : (
+                <Grid container spacing={2}>
+                  <JournalList
+                    journals={journals}
+                    title="Some Feed for Thought(s)..."
+                  />
+                </Grid>
+              )}
+            </div>
+          </div>
         ) : (
-          <JournalList
-            journals={journals}
-            title="Some Feed for Thought(s)..."
-          />
+          <LandingPage></LandingPage>
         )}
-      </div>
-    </main>
+      </Container>
+    </>
   );
 };
 export default Home;

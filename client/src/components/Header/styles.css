@@ -1,0 +1,34 @@
+.headerbar {
+  background-color: #daff47 !important;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0 10px 0;
+}
+.logo {
+  width: 80%;
+}
+.navMenu {
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+}
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+  background-color: #8aac02 !important;
+}
+.css-sghohy-MuiButtonBase-root-MuiButton-root:hover {
+  background-color: #a4c90e !important;
+}
+.css-i4bv87-MuiSvgIcon-root {
+  color: black;
+}
+.css-hip9hq-MuiPaper-root-MuiAppBar-root a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+}
+@media only screen and (min-width: 768px) {
+  .logo {
+    width: auto;
+  }
+}

@@ -1,0 +1,43 @@
+form {
+  background-color: rgb(189, 228, 250);
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 20px;
+}
+input {
+  line-height: 2;
+  margin: 20px 0;
+}
+.formWrapper {
+  display: flex;
+  justify-content: center;
+}
+.btn {
+  width: 50%;
+  text-align: center;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+p {
+  font-size: 18px;
+}
+h3,
+h2 {
+  color: green;
+  text-transform: capitalize;
+}
+.createAt {
+  color: rgb(112, 112, 112);
+  font-size: 12px;
+}
+@media only screen and (min-width: 768px) {
+  form {
+    width: 70%;
+    padding: 25px 50px;
+  }
+}

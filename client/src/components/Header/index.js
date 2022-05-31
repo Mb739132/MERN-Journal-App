@@ -7,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/Logo.svg";
+import "./styles.css";
 
 import Auth from "../../utils/auth";
 export default function MenuAppBar() {
@@ -16,7 +17,7 @@ export default function MenuAppBar() {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" className="headerbar">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to="/">
@@ -30,6 +31,9 @@ export default function MenuAppBar() {
           <div>
             {Auth.loggedIn() ? (
               <>
+                <a href="/" onClick={logout}>
+                  Logout
+                </a>
                 <Link to="/profile">
                   <IconButton
                     size="large"
@@ -42,14 +46,15 @@ export default function MenuAppBar() {
                     <AccountCircle />
                   </IconButton>
                 </Link>
-                <a href="/" onClick={logout}>
-                  Logout
-                </a>
               </>
             ) : (
               <>
-                <Link to="/login">Login</Link>
-                <Link to="/signup">Signup</Link>
+                <Link to="/login" className="navMenu">
+                  Login
+                </Link>
+                <Link to="/signup" className="navMenu">
+                  Signup
+                </Link>
               </>
             )}
           </div>

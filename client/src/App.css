@@ -28,6 +28,15 @@
   color: #61dafb;
 }
 
+.css-gadse4-MuiPaper-root-MuiGrid-root {
+  background-color: #99ffdf;
+}
+.css-dphtc1-MuiGrid-root {
+  background-image: url(../src/assets/images/splashscreen.png);
+}
+.errorMessage {
+  color: grey;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,8 +44,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-.logo {
-  margin: 20px 0;
 }

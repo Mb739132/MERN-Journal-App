@@ -16,7 +16,6 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-
 function Copyright(props) {
   return (
     <Typography
@@ -77,7 +76,6 @@ const Login = (props) => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
@@ -136,6 +134,13 @@ const Login = (props) => {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
+              <p>
+                {error && (
+                  <div className="errorMessage">
+                    Your email or password are incorrect, please try again!
+                  </div>
+                )}
+              </p>
               <Button
                 type="submit"
                 fullWidth
@@ -154,9 +159,6 @@ const Login = (props) => {
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
-          {error && (
-            <div>Your email or password are incorrect, please try again!</div>
-          )}
         </Grid>
       </Grid>
     </ThemeProvider>
