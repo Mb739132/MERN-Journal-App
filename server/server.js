@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const multer = require("multer");
 // import ApolloServer
 const { ApolloServer } = require("apollo-server-express");
 
@@ -28,10 +29,14 @@ const startApolloServer = async (typeDefs, resolvers) => {
   server.applyMiddleware({ app });
 
   // Serve up static assets
-  app.use(
-    "/images",
-    express.static(path.join(__dirname, "../client/src/assets"))
-  );
+
+  const storage = multer.diskStorage({
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  });
+
+  const upload = multer({ storage: storage });
 
   // Serve up static assets
   if (process.env.NODE_ENV === "production") {

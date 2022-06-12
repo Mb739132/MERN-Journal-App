@@ -32,10 +32,6 @@ export const ADD_JOURNAL = gql`
   ) {
     addJournal(heading: $heading, journalText: $journalText, image: $image) {
       _id
-      heading
-      journalText
-      image
-      createdAt
       username
     }
   }

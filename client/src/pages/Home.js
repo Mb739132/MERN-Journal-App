@@ -28,7 +28,6 @@ const Home = () => {
                 <Grid container spacing={2}>
                   <JournalList
                     journals={journals}
-                    title="Some Feed for Thought(s)..."
                   />
                 </Grid>
               )}

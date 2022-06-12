@@ -53,6 +53,7 @@ export const QUERY_ME = gql`
         _id
         heading
         journalText
+        image
         createdAt
       }
     }

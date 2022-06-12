@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 import { useMutation } from "@apollo/client";
 import { ADD_JOURNAL } from "../../utils/mutations";
 import { QUERY_JOURNALS, QUERY_ME } from "../../utils/queries";
@@ -8,14 +8,28 @@ import { TextareaAutosize } from "@mui/material";
 import "./styles.css";
 
 const Journal = () => {
-  const [heading, setHeading] = useState("");
-  const [journalText, setJournalText] = useState("");
-  const [image, setImage] = useState(null);
+  
+  const [formState, setFormState] = useState({
+    heading: "",
+    journalText: "",
+    image:""
+  });
+  const { heading, journalText } = formState;
+  // const [addJournal] = useMutation(ADD_JOURNAL);
+
+  const [imageState, setImageState] = useState({ selectedImage: "" });
+  const { selectedImage } = imageState;
+  const [upload, setUpload] = useState(true);
 
   // const [initialState, setInitialState] = useState("");
-  const onImageChange = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      setImage(URL.createObjectURL(event.target.files[0]));
+  const handleFileChange = (e) => {
+    if (e.target.name === "file") {
+     
+      setFormState({ ...formState, [e.target.name]: URL.createObjectURL(e.target.files[0]) });
+      setImageState({ selectedImage: e.target.files[0] });
+    } else {
+      
+      setFormState({ ...formState, [e.target.name]: e.target.value });
     }
   };
   const [addJournal] = useMutation(ADD_JOURNAL, {
@@ -40,26 +54,33 @@ const Journal = () => {
       });
     },
   });
+  // const [addJournal] = useMutation(ADD_JOURNAL);
   // submit form
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
 
     try {
-      await addJournal({ variables: { heading, journalText, image } });
+      const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`;
+      const imageData = new FormData();
+      imageData.append("file", selectedImage);
+      imageData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
 
-      // clear form value
-      setHeading("");
-      setJournalText("");
-      setImage("");
+      const response = await axios.post(url, imageData);
+      const imageUpload = response.data.url;
+      await addJournal({
+        variables: { ...formState, image: imageUpload },
+      });
     } catch (e) {
       console.error(e);
     }
+    setFormState({heading:"", journalText:"", image:""})
+    setUpload(true);
   };
   return (
     <div className="formWrapper">
       <form
         className="flex-row justify-center justify-space-between-md align-stretch"
-        onSubmit={handleFormSubmit}
+        onSubmit={handleFormSubmit} sx={{ m: 10 }}
       >
         <h2>What's on your mind?</h2>
         <input
@@ -67,16 +88,24 @@ const Journal = () => {
           name="heading"
           value={heading}
           placeholder="Title"
-          onChange={(e) => setHeading(e.target.value)}
+          onChange={handleFileChange}
         ></input>
         <TextareaAutosize
           placeholder="Here's a new journal..."
+          type="text"
+          name="journalText"
           minRows={7}
           value={journalText}
-          className="form-input col-12 col-md-9"
-          onChange={(e) => setJournalText(e.target.value)}
+          onChange={handleFileChange}
         ></TextareaAutosize>
-        <input type="file" onChange={onImageChange} multiple />
+         {upload &&<input
+          type="file"
+          name="file"
+          onChange={handleFileChange}
+          multiple
+          alt=""
+          accept="image/*"
+        />}
         <button className="btn col-12 col-md-3" type="submit">
           Add Journal
         </button>

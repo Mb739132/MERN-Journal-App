@@ -9,10 +9,6 @@ const JournalSchema = new Schema(
       minlength: 1,
       maxlength: 80,
     },
-    username: {
-      type: String,
-      required: true,
-    },
     journalText: {
       type: String,
       required: "Journal can not be blank!",
@@ -27,6 +23,11 @@ const JournalSchema = new Schema(
       type: Date,
       default: Date.now,
       get: (timestamp) => dateFormat(timestamp),
+    },
+
+    username: {
+      type: String,
+      required: true,
     },
   },
   {

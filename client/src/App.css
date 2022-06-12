@@ -37,6 +37,31 @@
 .errorMessage {
   color: grey;
 }
+
+.createTitle{
+  text-align: right;
+  font-size: 15px;
+  background-color:  rgb(189, 228, 250);
+  padding: 10px 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-bottom: 0;
+
+}
+.journalBody{
+  background-color: rgb(237, 237, 237);
+  padding: 20px;
+
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+button{
+  background-color: rgb(6, 198, 6);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -44,4 +69,7 @@
   to {
     transform: rotate(360deg);
   }
+}
+.img{
+  width: 100%;
 }
